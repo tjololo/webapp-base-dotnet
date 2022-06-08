@@ -8,10 +8,11 @@ on:
 jobs:
   main:
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/template-')
     steps:
       - name: Get version from tags
         id: version
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/template-*/}
+        run: echo ::set-output name=tag::${GITHUB_REF/refs\/tags\/template-/}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -22,11 +23,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-#      - name: Build and push
-#        id: docker_build
-#        uses: docker/build-push-action@v2
-#        with:
-#          push: true
-#          tags: ghcr.io/${{ github.repository }}:v${{ steps.version.outputs.tag }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ghcr.io/${{ github.repository }}-base:v${{ steps.version.outputs.tag }}
       - name: Image digest
-        run: echo ${{ steps.version.outputs.tag }}
+        run: echo ${{ steps.docker_build.outputs.digest }}
