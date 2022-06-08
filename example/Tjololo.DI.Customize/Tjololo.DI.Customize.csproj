@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\lib\Tjololo.DI.Interfaces\Tjololo.DI.Interfaces.csproj" />
+        <PackageReference Include="Tjololo.DI.Interfaces" Version="0.0.1-preview.1" PrivateAssets="All" />
     </ItemGroup>
 
 </Project>

@@ -9,12 +9,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\lib\Tjololo.DI.Interfaces\Tjololo.DI.Interfaces.csproj" />
-      <ProjectReference Include="..\..\lib\Tjololo.DI.Defaults\Tjololo.DI.Defaults.csproj" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.2" />
+        <PackageReference Include="Tjololo.DI.Defaults" Version="0.0.1-preview.2" />
+        <PackageReference Include="Tjololo.DI.Interfaces" Version="0.0.1-preview.1" />
     </ItemGroup>
 
 </Project>
