@@ -1,9 +1,9 @@
-name: Test build and pack
+name: Pack and publish nuget
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types:
+      - published
 
 jobs:
   build-libs:
@@ -26,3 +26,7 @@ jobs:
       - name: Pack
         run: |
           dotnet pack dotnet-reflection.sln --configuration Release --no-restore --no-build -p:BuildNumber=${{ github.run_number }} -p:Deterministic=true
+      - name: Publish
+        if: startsWith(github.ref_name, "interfaces-")
+        run: |
+          dotnet nuget push lib/Tjololo.DI.Interfaces/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
