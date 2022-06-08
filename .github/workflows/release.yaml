@@ -26,7 +26,11 @@ jobs:
       - name: Pack
         run: |
           dotnet pack dotnet-reflection.sln --configuration Release --no-restore --no-build -p:BuildNumber=${{ github.run_number }} -p:Deterministic=true
-      - name: Publish
+      - name: Publish Interfaces
         if: startsWith(github.ref, 'refs/tags/interfaces-')
         run: |
           dotnet nuget push lib/Tjololo.DI.Interfaces/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+      - name: Publish Defaults
+        if: startsWith(github.ref, 'refs/tags/defaults-')
+        run: |
+          dotnet nuget push lib/Tjololo.DI.Defaults/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
