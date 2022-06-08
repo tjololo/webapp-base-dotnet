@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+        <PackageId>Tjololo.DI.Defaults</PackageId>
+        <RootNamespace>Tjololo.DI.Defaults</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Authors>tjololo</Authors>
+        <OutputType>Library</OutputType>
+        <PackageReleaseNotes>https://github.com/tjololo/webapp-template-dotnet/releases</PackageReleaseNotes>
+        <RepositoryUrl>https://github.com/tjololo/webapp-template-dotnet</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <Description>Project holding defaults for DI POC</Description>
+        <IsPackable>true</IsPackable>
+        <PackageTags>Demo;tjololo;DependencyInjection</PackageTags>
+        <LangVersion>10.0</LangVersion>
+        <MinVerTagPrefix>defaults-</MinVerTagPrefix>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Tjololo.DI.Interfaces\Tjololo.DI.Interfaces.csproj" />
+    </ItemGroup>
+
+</Project>
