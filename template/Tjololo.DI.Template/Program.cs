@@ -38,18 +38,29 @@ static void RegisterCustomOverrides(IServiceCollection services)
     Type transient = typeof(TransientAttribute);
     try
     {
-        var types = Enumerable.Where(Enumerable.Select(Assembly.Load(an).GetTypes()
-            .Where(p => p.IsDefined(transient, false)), s => new
+        var assembly = Assembly.Load(an);
+        foreach(AssemblyName subAssembly in assembly.GetReferencedAssemblies())
         {
-            Service = ((TransientAttribute)Attribute.GetCustomAttribute((MemberInfo)s, transient)).Type,
-            Implementation = s
-        }), x => x.Service != null);
-        foreach (var type in types)
-        {
-            services.AddTransient(type.Service, type.Implementation);
+            Console.WriteLine($"Assembly: {subAssembly.Name} referenced by {an.Name}");
+            RegisterTransientsInAssembly(services, Assembly.Load(subAssembly));
         }
+        RegisterTransientsInAssembly(services, assembly);
     } catch(FileNotFoundException e)
     {
         Console.WriteLine(e.Message);
+    }
+}
+
+static void RegisterTransientsInAssembly(IServiceCollection services, Assembly assembly)
+{
+    var types = Enumerable.Where(Enumerable.Select(assembly.GetTypes()
+        .Where(p => p.IsDefined(typeof(TransientAttribute), false)), s => new
+    {
+        Service = ((TransientAttribute)Attribute.GetCustomAttribute((MemberInfo)s, typeof(TransientAttribute))).Type,
+        Implementation = s
+    }), x => x.Service != null);
+    foreach (var type in types)
+    {
+        services.AddTransient(type.Service, type.Implementation);
     }
 }
